@@ -1,0 +1,32 @@
+.main {
+  height: 100%;
+  width: auto;
+}
+
+#accordionPlus:hover{
+  text-decoration: none;
+}
+
+.btn-style {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.green {
+  color: #20B2AA;
+}
+
+.red {
+  color: #B20000;
+}
+
+.borderGreen {
+  border: 3px solid#20B2AA;
+}
+
+.borderRed {
+  border: 3px solid #B20000;
+}
+

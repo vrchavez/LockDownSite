@@ -1,0 +1,19 @@
+.invalid {
+  color: #dc3545;
+  width: auto;
+  height: 15px;
+  padding-bottom: 35px;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.lock {
+  height: 250px;
+  width: 450px;
+}
+
+.imgCont {
+  height: 200px;
+  width: 100%;
+  text-align: center;
+}

@@ -1,0 +1,28 @@
+.main {
+  padding-top: 15px;
+  height: 100% !important;
+}
+
+.imgCont {
+  height: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.lock {
+  height: 400px;
+  width: auto;
+  text-align: center;
+  margin: auto;
+  left: 0;
+  right: 0;
+  position: relative;
+}
+
+.abso {
+  position: absolute;
+}
+
+.pink {
+  background-color: #FFC0CB !important;
+}

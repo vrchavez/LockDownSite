@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="../../assets/lock.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+        LockDown
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <!-- <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="#">Features</a>
+        <a class="nav-item nav-link" href="#">Pricing</a>
+        <a class="nav-item nav-link disabled" href="#">Disabled</a> -->
+      </div>
+    </div>
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+          <div display="dynamic" ngbDropdown class="d-inline-block">
+              <button class="btn btn-outline-secondary" id="dropdownBasic1" ngbDropdownToggle>{{familyName}}</button>
+              <div  ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem>Home</button>
+                <button (click)="logout()" ngbDropdownItem>LogOut</button>
+              </div>
+          </div>
+      </li>
+    </ul>
+</nav>

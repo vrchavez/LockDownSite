@@ -1,0 +1,197 @@
+<app-header></app-header>
+<div class="container-fluid">
+  <ngb-accordion #acc="ngbAccordion">
+      <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <span id="accordionPlus">(+)&nbsp;&nbsp;&nbsp; Add New Family Member</span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+              <form [formGroup]="memberForm" (ngSubmit)="onSubmit('memberAdd')">
+                  <div class="form-group">
+                    <label for="Name">Family Member Name</label>
+                    <input type="text" class="form-control" id="Name" [formControl]="memberForm.controls['Name']" placeholder="Enter Food Item">
+                  </div>
+                  <div class="form-group">
+                      <label for="Phone">Phone Number</label>
+                      <input type="text" class="form-control" id="Phone" [formControl]="memberForm.controls['PhoneNumber']" placeholder="000-000-0000">
+                  </div>
+                  <div class="form-group">
+                      <label for="foodImg">Family Member Image</label>
+                      <input type="file" class="form-control-file" (change)="changeImage($event.target.files)" id="foodImg" aria-describedby="fileHelp">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button class="btn btn-secondary btn-rght" (click)="cancel($event, 'member')" >Cancel</button>
+              </form>
+          </ng-template>
+        </ngb-panel>
+  </ngb-accordion>
+  <div class="row">
+    <div class="card">
+
+    </div>
+  </div>
+</div>
+
+
+<ng-template #modalEdit let-modal>
+  <div class="modal-header ">
+    <h5 class="modal-title modal-text">Plate Edit</h5>
+    <button type="button" class="close" (click)="modal.close('Exit Button')" >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body logo-text modal-body-text">
+    <!--This is where info about the order (special requests, notes, ingridients) will show up-->
+      <p> </p>
+      <form [formGroup]="foodForm" (ngSubmit)="onSubmit('update')">
+        <div class="form-group">
+          <label for="Name">Food Item Name</label>
+          <input type="text" class="form-control" id="Name" [formControl]="foodForm.controls['Name']" value="{{modalData.name}}">
+        </div>
+        <div class="form-group">
+          <label for="Description">Description</label>
+          <textarea class="form-control" id="Description" [formControl]="foodForm.controls['Description']" value="{{modalData.description}}" rows="3"></textarea>
+        </div>
+        <div class="form-group col-4">
+          <label for="PrepTime">Prep Time (Minutes)</label>
+          <input class="form-control" id="PrepTime" [formControl]="foodForm.controls['PrepTime']" type="number" value="{{modalData.prepTime}}" step="0.01" min="0" max="10">
+        </div>
+        <div class="form-group">
+            <label for="Price">Price</label>
+            <input class="form-control" id="Price" [formControl]="foodForm.controls['Price']" type="number" value="{{modalData.price}}" step="0.01" min="0" max="100">
+          </div>
+        <div class="form-group">
+          <label for="Type">Type</label>
+          <select class="form-control" value="{{modalData.type}}" [formControl]="foodForm.controls['Type']" id="Type">
+            <option></option>
+            <option>Entree</option>
+            <option>Side</option>
+            <option>Desert</option>
+            <option>Sampler</option>
+            <option>Beverage</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="ServingSize">Minimum Serving Size (Persons)</label>
+          <select class="form-control" value="{{modalData.servingSize}}" [formControl]="foodForm.controls['ServingSize']" id="ServingSize">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+        <div class="form-group" id="inputAdd">
+          <!-- <label for="fItemIng">Ingredients <a (click)="addNewIngInput($event)"> <i  class="icon ion-ios-plus"></i></a> </label> -->
+          <!--<input type="text" class="form-control" id="fItemIng" >-->
+          <div class="form-group" id="inputAdd">
+            <label for="Ingredients">Ingredients (Seperate With Comma)  </label>
+            <input value="{{modalData.ingredients}}" type="text" [formControl]="foodForm.controls['Ingredients']" class="form-control" id="Ingredients" >
+            <!-- <input  #ingInput *ngFor="let i of countPlace" (blur)="update(ingInput.value)" id="{{i}}" class="form-control"  type="text"> <a (click)="addNewIngInput($event)"> <i  class="icon ion-ios-plus"></i></a> -->
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="foodImg">Food Item Image</label>
+          <input type="file" class="form-control-file" (change)="changeImage($event.target.files)" id="foodImg" aria-describedby="fileHelp">
+          <small id="fileHelp" class="form-text text-muted">Please provide the best image to describe and showcase your product.</small>
+        </div>
+        <button class="btn btn-secondary btn-rght" (click)="modal.close('cancelUpdate')">Cancel</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+    <!-- <div>
+      Event:
+      <pre>{{ modalData?.event | json }}</pre>
+    </div> -->
+  </div>
+  <!-- <div class="modal-footer">
+      <button ngbAutofocus type="button" class="btn btn-secondary" (click)="modal.close('Cancel')">Cancel</button>
+    <button ngbAutofocus type="button" class="btn btn-success" (click)="modal.close('ConfirmComplete')">Complete</button>
+  </div> -->
+</ng-template>
+<ng-template #modalDelete let-modal>
+  <div class="modal-header ">
+    <h5 class="modal-title modal-text">Delete Family Member</h5>
+    <button type="button" class="close" (click)="modal.close('Exit Button')" >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body logo-text modal-body-text">
+    <!--This is where info about the order (special requests, notes, ingridients) will show up-->
+      Are you sure you want to DELETE the following Plate?:
+      <ul class="list-text" style="list-style: none;">
+        <li>Name: {{modalData.name}}</li>
+        <li>Type: {{modalData.type}}</li>
+        <li>Price: {{modalData.price}}</li>
+        <li>Description: {{modalData.description}}</li>
+        <li>PrepTime: {{modalData.prepTime}}</li>
+        <li>Ingredients: {{modalData.ingredients}}</li>
+        <li>ServingSize: {{modalData.servingSize}}</li>
+      </ul>
+      <p> </p>
+
+    <!-- <div>
+      Event:
+      <pre>{{ modalData?.event | json }}</pre>
+    </div> -->
+  </div>
+  <div class="modal-footer">
+      <button ngbAutofocus type="button" class="btn btn-secondary" (click)="modal.close('Dismiss')">Dismiss</button>
+    <button ngbAutofocus type="button" class="btn orange" (click)="modal.close('ConfirmDelete')">Confirm</button>
+  </div>
+</ng-template>
+<div class="container-fluid">
+  <ngb-accordion #acc="ngbAccordion">
+      <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <span id="accordionPlus2">(+)&nbsp;&nbsp;&nbsp; Add New Place</span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+              <form [formGroup]="foodForm" (ngSubmit)="onSubmit('placesAdd')">
+                  <div class="form-group col-md-6" id="inputAdd">
+                      <!-- <label for="fItemIng">Ingredients <a (click)="addNewIngInput($event)"> <i  class="icon ion-ios-plus"></i></a> </label> -->
+                      <!--<input type="text" class="form-control" id="fItemIng" >-->
+                      <label for="places">Add A New Place <a (click)="addNewIngInput($event)"> (+)</a> </label>
+                      <input type="text" [formControl]="foodForm.controls['Places']" class="form-control" id="places" >
+                      <input #ingInput *ngFor="let i of countPlace" (blur)="update(ingInput.value)" id="{{i}}" class="form-control"  type="text">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button class="btn btn-secondary btn-rght" (click)="cancel($event, 'place')" >Cancel</button>
+              </form>
+          </ng-template>
+        </ngb-panel>
+  </ngb-accordion>
+</div>
+
+<div class="container-fluid">
+    <p class="text-uppercase mb-3 mt-5 fw-700 fntHght">Family Members</p>
+    <div class="row" *ngFor="let row of foodDisplay">
+        <div class="col-sm-4" *ngFor="let item of row">
+          <div class="card" [ngClass]="{'borderGreen': item.memberPlace === 'InRoom', 'borderRed': item.memberPlace !== 'InRoom'}">
+            <div class="card-body">
+              <h5 class="card-title text-center">
+                {{item?.name}}
+                <!-- <button (click)="clickEdit()" class="btn btn-success right">Edit</button>
+                <button class="btn btn-danger right">Delete</button> -->
+              </h5>
+              <h4 [ngClass]="{'green': item.memberPlace === 'InRoom', 'red': item.memberPlace !== 'InRoom'}" class="text-center green">
+                {{item?.memberPlace.toUpperCase()}}
+              </h4>
+            </div>
+            <img class="card-img-bottom img-fluid" src="{{item.imgRef}}" alt="Card image cap" />
+            <div class="card-footer">
+              <div *ngFor="let place of places">
+                <button (click)="clickPlaceChange(place, item.id, item.name)" class="btn btn-dark btn-sm btn-style"
+                     style="color:white">
+                    {{place}}
+                </button>
+              </div>
+              <button (click)="clickPlaceChange('InRoom', item.id, item.name)" class="btn btn-primary btn-sm btn-style"
+              id="left" style="color:white">
+                In Room
+              </button>
+          </div>
+          </div>
+        </div>
+    </div>
+</div>
+

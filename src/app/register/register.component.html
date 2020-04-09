@@ -1,0 +1,34 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row justify-content-center" style="padding-top: 10%;">
+    <div class="col-lg-6 col-sm-12">
+      <div class="card">
+        <div class="imgCont">
+          <img class="card-img-top lock" src="../../assets/lock.jpg" alt="Card image cap">
+        </div>
+        <div class="card-body">
+          <h1 class="card-title text-center">Register</h1>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+              <label for="exampleInputEmail1">FamilyName Name</label>
+              <input [formControl]="form.controls['familyname']" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Family Name"
+              [ngClass]="{'is-invalid': form.controls['familyname'].hasError('required') && ((form.controls['familyname'].touched) || (subStatus))}"/>
+            </div>
+            <div class="invalid" *ngIf="form.controls['familyname'].hasError('required') && ((form.controls['familyname'].touched) || (subStatus))">
+              Family Name Required</div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" [formControl]="form.controls['password']"
+              [ngClass]="{'is-invalid': (!this.form.controls['password'].valid || form.controls['password'].hasError('required')) && ((form.controls['password'].touched) || (subStatus))}" />
+            </div>
+            <div class="invalid" *ngIf=" (!this.form.controls['password'].valid && ((form.controls['password'].touched) || (subStatus))) ||
+            (form.controls['password'].hasError('required') ) && ((form.controls['password'].touched) || (subStatus))">Please provide
+              at least 1 uppercase, lowercase, number and special character (Min 9 Characters).
+            </div>
+            <button  [disabled]="!form.valid" type="submit" class="btn btn-primary">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
